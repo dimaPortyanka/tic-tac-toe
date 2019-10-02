@@ -1,4 +1,4 @@
-# tic_tac_toe
+# Tic tac toe game using dart
 
 Tic tac toe game
 
