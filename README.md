@@ -1,7 +1,5 @@
 # Tic tac toe game using dart
 
-Tic tac toe game
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
