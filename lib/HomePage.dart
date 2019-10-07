@@ -1,7 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'game/Game.dart';
+import 'game/Local1to1Game.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: Game(),
+        child: Local1to1Game(),
       ),
     );
   }

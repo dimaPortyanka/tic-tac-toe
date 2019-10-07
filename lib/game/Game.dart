@@ -1,32 +1,51 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:tic_tac_toe/game/Filed.dart';
 import 'package:tic_tac_toe/game/utils.dart';
 
 class Game extends StatefulWidget {
-  @override
+  NextMoveFunction _nextMove = null;
+
+  bool _allowMove = true;
+
+  Game({ bool allowMove, NextMoveFunction nextMove }) {
+    if (allowMove != null) {
+      _allowMove = allowMove;
+    }
+
+    if (nextMove != null) {
+      _nextMove = nextMove;
+    }
+  }
+
   State<StatefulWidget> createState() {
     return _GameState();
   }
 }
 
+Map<String, Symb> generateEmptyField() {
+  return new Map<String, Symb>();
+}
+
 class _GameState extends State<Game> {
-  var _matrix = new Map<String, int>();
-  var _moves = 0;
-  var _curSymb = X;
+  Map<String, Symb> _matrix = generateEmptyField();
+  int _moves = 0;
+  Symb _curSymb = Symb.X;
   static const _fieldSize = 3;
 
   _restartGame() {
     setState(() {
-      _matrix = new Map<String, int>();
+      _matrix = generateEmptyField();
       _moves = 0;
-      _curSymb = X;
+      _curSymb = Symb.X;
     });
   }
 
-  void _onClickCell(int i, int j) {
+  void _makeMove(int i, int j) {
     if (_matrix[key(i,j)] != null) {
-      return null;
+      return;
     }
 
     setState(() {
@@ -53,12 +72,20 @@ class _GameState extends State<Game> {
         });
       }
 
-      if (_curSymb == X) {
-        _curSymb = O;
-      } else {
-        _curSymb = X;
-      }
+      _curSymb = notSymb(_curSymb);
     });
+
+    if (widget._nextMove == null) {
+      return;
+    }
+
+    var nextMoveCoordinates = widget._nextMove(_curSymb, _matrix, _moves);
+
+    if (nextMoveCoordinates == null) {
+      return;
+    }
+
+    _makeMove(nextMoveCoordinates[0], nextMoveCoordinates[1]);
   }
 
   bool _winnerExists(int row, int col) {
@@ -114,7 +141,11 @@ class _GameState extends State<Game> {
             child: Field(
               matrix: _matrix,
               selectCell: (int x, int y) {
-                _onClickCell(x,y);
+                if (!widget._allowMove) {
+                  return;
+                }
+
+                _makeMove(x,y);
               },
             ),
           )

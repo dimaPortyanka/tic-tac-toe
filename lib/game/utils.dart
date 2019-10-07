@@ -1,9 +1,19 @@
-const X = 1;
-const O = 2;
+enum Symb {
+  X,
+  O,
+}
+
+Symb notSymb(Symb s) {
+  if (s == Symb.X) {
+    return Symb.O;
+  }
+
+  return Symb.X;
+}
 
 const SYMBOL_NAME_MAP = {
-  X: "Cross",
-  O: "Zeros",
+  Symb.X: "X",
+  Symb.O: "O",
 };
 
 String key(int i, int j) {
@@ -15,3 +25,5 @@ List<int> getPosition(String s) {
 
   return [int.parse(splitted[0]), int.parse(splitted[1])];
 }
+
+typedef NextMoveFunction = List<int> Function(Symb, Map<String, Symb>, int);

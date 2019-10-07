@@ -11,7 +11,7 @@ class FieldPainter extends CustomPainter {
   });
 
   final Function(Offset, Offset, double) setField;
-  final Map<String, int> matrix;
+  final Map<String, Symb> matrix;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -73,7 +73,7 @@ class FieldPainter extends CustomPainter {
       final xPoint = x0+segmentSize*xIndex;
       final yPoint = y0+segmentSize*yIndex;
 
-      if (value == X) {
+      if (value == Symb.X) {
         canvas.drawLine(
           Offset(
             xPoint,
@@ -118,7 +118,7 @@ class FieldPainter extends CustomPainter {
 
 class Field extends StatefulWidget {
   final Function(int, int) selectCell;
-  final Map<String, int> matrix;
+  final Map<String, Symb> matrix;
   Field({ Key key, @required this.selectCell, @required this.matrix });
 
   @override
