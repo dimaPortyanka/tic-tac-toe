@@ -1,6 +1,4 @@
-# tic_tac_toe
-
-Tic tac toe game
+# Tic tac toe game using dart
 
 ## Getting Started
 
